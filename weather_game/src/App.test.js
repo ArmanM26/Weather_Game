@@ -1,8 +1,20 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+test("renders weather game title", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const titleElement = screen.getByText(/Weather Temperature Game/i);
+  expect(titleElement).toBeInTheDocument();
+});
+
+test("renders guess input field", () => {
+  render(<App />);
+  const inputElement = screen.getByPlaceholderText(/Enter temperature in °C/i);
+  expect(inputElement).toBeInTheDocument();
+});
+
+test("renders submit button", () => {
+  render(<App />);
+  const buttonElement = screen.getByText(/Submit/i);
+  expect(buttonElement).toBeInTheDocument();
 });

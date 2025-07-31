@@ -1,81 +1,488 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #001f3a;
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
-  /* background-image: url("./image/weather.jpg") */
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-}
-
-h2 {
-  text-align: center;
-  color: #d9534f;
 }
 
 .container {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 40px;
   max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  animation: slideUp 0.6s ease-out;
 }
 
-.form-container {
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.thermometer-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.header h1 {
+  color: #2d3748;
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #718096;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.demo-note {
+  color: #a0aec0;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.game-info {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f7fafc;
+  border-radius: 10px;
+}
+
+.round-info {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.score-info {
+  font-weight: 600;
+}
+
+.score-excellent {
+  color: #38a169;
+}
+
+.score-good {
+  color: #d69e2e;
+}
+
+.score-needs-improvement {
+  color: #e53e3e;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4299e1, #3182ce);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.error-message {
+  background: #fed7d7;
+  color: #c53030;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #feb2b2;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.city-section {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.guess-prompt {
+  font-size: 18px;
+  color: #4a5568;
+  margin-bottom: 15px;
+}
+
+.current-city {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
-input[type="number"] {
-  width: 200px; /* Fixed width for consistency */
-  padding: 10px;
-  margin-right: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; /* Include padding and border in width */
+.location-icon {
+  font-size: 20px;
 }
 
-input[type="number"]:focus {
-  border-color: #007bff; /* Highlight border on focus */
-  outline: none; /* Remove default outline */
+.city-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2b6cb0;
 }
 
-button {
-  padding: 10px 15px;
-  background-color: #007bff;
+.guess-form {
+  margin-bottom: 25px;
+}
+
+.input-group {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.temperature-input {
+  flex: 1;
+  padding: 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.temperature-input:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.temperature-input:disabled {
+  background: #f7fafc;
+  cursor: not-allowed;
+}
+
+.submit-btn {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #4299e1, #3182ce);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(66, 153, 225, 0.3);
 }
 
-.feedback {
-  margin-top: 20px;
+.submit-btn:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.feedback-section {
+  background: #ebf8ff;
+  border: 1px solid #bee3f8;
+  border-radius: 10px;
+  padding: 20px;
   text-align: center;
-  font-weight: bold;
+  margin-bottom: 25px;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feedback-message {
+  color: #2c5282;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.next-round-info {
+  color: #4299e1;
+  font-size: 14px;
+}
+
+.history-section {
+  margin-top: 30px;
+}
+
+.history-section h3 {
+  color: #2d3748;
+  margin-bottom: 15px;
+  font-size: 18px;
 }
 
 .city-history {
-  margin-top: 20px;
-  border-top: 1px solid #ccc;
-  padding-top: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .city-entry {
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f7fafc;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  animation: slideInLeft 0.3s ease-out;
 }
 
-.city-entry span {
-  font-weight: bold;
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.city-entry .city-name {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 16px;
+}
+
+.guess-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.points-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-excellent {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.badge-good {
+  background: #faf089;
+  color: #744210;
+}
+
+.badge-poor {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+/* Game Over Styles */
+.game-over {
+  text-align: center;
+  animation: bounceIn 0.8s ease-out;
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.trophy {
+  font-size: 64px;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.game-over h1 {
+  color: #2d3748;
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.final-score {
+  font-size: 20px;
+  color: #4a5568;
+  margin-bottom: 30px;
+}
+
+.final-score span {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.results-section {
+  margin: 30px 0;
+}
+
+.results-section h3 {
+  color: #2d3748;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.city-entry-detailed {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f7fafc;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border-left: 4px solid #4299e1;
+}
+
+.city-info .city-name {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.guess-details {
+  color: #718096;
+  font-size: 14px;
+}
+
+.play-again-btn {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.play-again-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(72, 187, 120, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  .temperature-input {
+    margin-bottom: 10px;
+  }
+
+  .city-entry {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .guess-info {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* Scrollbar Styling */
+.city-history::-webkit-scrollbar {
+  width: 6px;
+}
+
+.city-history::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.city-history::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.city-history::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
